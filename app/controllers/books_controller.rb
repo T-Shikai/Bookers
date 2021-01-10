@@ -1,0 +1,44 @@
+class BooksController < ApplicationController
+  def index
+    @book = Book.new
+    @books = Book.all
+  end
+
+  def show
+    @book = Book.find_by(id: params[:id])
+  end
+
+  def edit
+    @book = Book.find_by(id: params[:id])
+  end
+  
+  def create
+    @books = Book.all
+    @book = Book.new(title: params[:title],body: params[:body])
+    if @book.save
+      flash[:notice] = "Book was successfully created."
+      redirect_to("/books/#{@book.id}")
+    else
+      render("/books/index")
+    end
+  end
+  
+  def update
+    @book = Book.find_by(id: params[:id])
+    @book.title = params[:title]
+    @book.body = params[:body]
+    if @book.save
+      flash[:notice] = "Book was successfully updated."
+      redirect_to("/books/#{@book.id}")
+    else
+      render("/books/edit")
+    end
+  end
+  
+  def destroy
+    @book = Book.find_by(id: params[:id])
+    @book.destroy
+    flash[:notice] = "『#{@book.title}』 was successfully destroyed."
+    redirect_to("/books/index")
+  end
+end

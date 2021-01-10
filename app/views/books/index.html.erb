@@ -1,0 +1,46 @@
+<div>
+    <h1>Books</h1>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Body</th>
+            </tr>
+        </thead>
+        <% @books.each do |book| %>
+            <tbody>
+                <tr>
+                    <td><%= book.title %></td>
+                    <td><%= book.body %></td>
+                    <td><%= link_to("Show","/books/#{book.id}") %></td>
+                    <td><%= link_to("Edit","/books/#{book.id}/edit") %></td>
+                    <td><%= link_to("Destroy","/books/#{book.id}/destroy",{method:"post"}) %></td>
+                </tr>
+            </tbody>
+        <% end %>
+    </table>
+</div>
+
+<div>
+    <h2>New Book</h2>
+    <%= form_tag("/books/create") do %>
+        <% @book.errors.full_messages.each do |message| %>
+            <div class="error">
+                <% message = "error: #{message}" %>
+                <%= message %>
+            </div>
+        <% end %>
+        <div>
+            <p class="title-label">Title</p>
+            <input type="text" name="title" class="title-box"></input>
+        </div>
+        <div>
+            <p class="body-label">Body</p>
+            <textarea name="body"></textarea>
+        </div>
+        <div>
+            <input type="submit" value="Create Book"></input>
+        </div>
+    <% end %>
+</div>
