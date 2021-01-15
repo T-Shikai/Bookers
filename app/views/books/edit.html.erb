@@ -1,6 +1,6 @@
 <h1>Editing Book</h1>
 
-<%= form_tag("/books/#{@book.id}/update") do %>
+<%= form_with model:@book, url:book_path, local:true do |f| %>
     <% @book.errors.full_messages.each do |message| %>
         <div class="error">
             <% message = "error: #{message}" %>
@@ -9,18 +9,18 @@
     <% end %>
     <div>
         <p>Title</p>
-        <p><input type="text" name="title" value=<%= @book.title %>></input></p>
+        <%= f.text_field :title %>
     </div>
     <div>
         <p>Body</p>
-        <p><textarea name="body"><%= @book.body %></textarea></p>
+        <%= f.text_area :body %>
     </div>
     <div>
-        <input type="submit" value="Update Book"></input>
+        <%= f.submit 'Update Book' %>
     </div>
 <% end %>
     
 <div>
-    <%= link_to("Shows","/books/#{@book.id}") %> | <%= link_to("Back","/books/index") %>
+    <%= link_to "Show", book_path(@book.id) %> | <%= link_to "Back", books_path %>
 </div>
     
